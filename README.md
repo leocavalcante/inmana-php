@@ -1,36 +1,53 @@
-# Introduction
+# Inmana PHP
 
-This is a skeleton application using the Hyperf framework. This application is meant to be used as a starting place for those looking to get their feet wet with Hyperf Framework.
+🚀 Developing [Rocketseat](https://rocketseat.com.br/) 's [Next Level Week](https://nextlevelweek.com/) (NLW#05) Application using [Swoole](https://www.swoole.co.uk/) + [Hyperf](https://hyperf.io/).
 
-# Requirements
+> This is the app of the [Elixir track](https://nextlevelweek.com/episodios/elixir/3/edicao/5).
 
-Hyperf has some requirements for the system environment, it can only run under Linux and Mac environment, but due to the development of Docker virtualization technology, Docker for Windows can also be used as the running environment under Windows.
+| I know PHP/Swoole | I know NLW#5 |
+| --- | --- |
+| The Next Level Week is a sprint promoted by the education company Rocketseat to help in the learning of new technologies. Unfortunately they don't officially support a PHP track, but we love PHP specially when it comes with Swoole. | This is the following of the Elixir track, but using Swoole (instead of regular PHP-FPM), a high-performance server for PHP applications inspired on Erlang, and Hyper, a MVC framework analog to Phoenix, that supports Coroutines as first-class. |
 
-The various versions of Dockerfile have been prepared for you in the [hyperf\hyperf-docker](https://github.com/hyperf/hyperf-docker) project, or directly based on the already built [hyperf\hyperf](https://hub.docker.com/r/hyperf/hyperf) Image to run.
+## Comparison table
 
-When you don't want to use Docker as the basis for your running environment, you need to make sure that your operating environment meets the following requirements:  
+| | Language | Server | Framework | ORM |
+| --- | --- | --- | --- | --- |
+| **From** | Elixir | GenServer | Phoenix | Ecto |
+| **To** | **PHP** | **Swoole** | **Hyperf** | **Hyperf-Eloquent** |
 
- - PHP >= 7.2
- - Swoole PHP extension >= 4.4，and Disabled `Short Name`
- - OpenSSL PHP extension
- - JSON PHP extension
- - PDO PHP extension （If you need to use MySQL Client）
- - Redis PHP extension （If you need to use Redis Client）
- - Protobuf PHP extension （If you need to use gRPC Server of Client）
+For the REPL (iex) you can use [gokure/hyperf-tinker](https://packagist.org/packages/gokure/hyperf-tinker).
 
-# Installation using Composer
+The mail component for Elixir was based on the third-party [Bamboo](https://github.com/thoughtbot/bamboo) project, **same here, it uses [hyperf-ext/mail](https://github.com/hyperf-ext/mail)** (both running locally with logs, but with a wide range of transports/adapters available).  
 
-The easiest way to create a new Hyperf project is to use Composer. If you don't have it already installed, then please install as per the documentation.
+> Check `/runtime/logs/hyperf.log` for sent emails.
 
-To create your new Hyperf project:
+## Trying out
 
-$ composer create-project hyperf/hyperf-skeleton path/to/install
+### Up development environment
 
-Once installed, you can run the server immediately using the command below.
+```shell
+docker compose run --rm --service-ports app
+```
 
-$ cd path/to/install
-$ php bin/hyperf.php start
+This will start an interactive shell inside a container-based development environment.<br>
+**The following commands should be executed inside this shell session.**
 
-This will start the cli-server on port `9501`, and bind it to all network interfaces. You can then visit the site at `http://localhost:9501/`
+> If you don't want to use Docker you can skip this step, just make sure you have a running MySQL server.
 
-which will bring up Hyperf default home page.
+### Install dependencies
+```shell
+composer install
+```
+
+### Configure
+Make sure to change `.env` for proper values (like setting `DB_HOST` to `db` if in Docker) and adding passwords.
+
+### Run migrations
+```shell
+php bin/hyper.php migrate
+```
+
+### Start the server (and watch for changes)
+```shell
+php bin/hyper.php server:watch
+```
