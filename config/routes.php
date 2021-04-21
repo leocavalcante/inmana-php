@@ -19,4 +19,5 @@ Router::get('/favicon.ico', function () {
 
 Router::addGroup('/api', static function (): void {
     Router::get('/welcome', [\App\Controller\WelcomeController::class, 'index']);
+    Router::post('/restaurants', [\App\Controller\RestaurantController::class, 'create']);
 });
