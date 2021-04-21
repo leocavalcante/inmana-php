@@ -20,4 +20,6 @@ Router::get('/favicon.ico', function () {
 Router::addGroup('/api', static function (): void {
     Router::get('/welcome', [\App\Controller\WelcomeController::class, 'index']);
     Router::post('/restaurants', [\App\Controller\RestaurantController::class, 'create']);
+    Router::post('/supplies', [\App\Controller\SupplyController::class, 'create']);
+    Router::get('/supplies/{id}', [\App\Controller\SupplyController::class, 'show']);
 });

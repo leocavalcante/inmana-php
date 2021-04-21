@@ -14,9 +14,11 @@
     "require": {
         "php": ">=7.4",
         "ext-json": "*",
-        "ramsey/uuid": "^4.1",
+        "ext-swoole": "^4.6",
+        "hyperf-ext/mail": "~2.1.0",
+        "hyperf/async-queue": "^2.1",
         "hyperf/cache": "~2.1.0",
-        "hyperf/command": "~2.1.0",
+        "hyperf/command": "^2.1",
         "hyperf/config": "~2.1.0",
         "hyperf/database": "~2.1.0",
         "hyperf/db-connection": "~2.1.0",
@@ -27,7 +29,11 @@
         "hyperf/memory": "~2.1.0",
         "hyperf/process": "~2.1.0",
         "hyperf/redis": "~2.1.0",
-        "hyperf/validation": "^2.1"
+        "hyperf/validation": "~2.1.0",
+        "hyperf/view": "~2.1.0",
+        "hyperf/view-engine": "~2.1.0",
+        "ramsey/uuid": "^4.1",
+        "duncan3dc/blade": "^4.10"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.14",

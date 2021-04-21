@@ -3,6 +3,9 @@
 declare (strict_types=1);
 namespace App\Model;
 
+use Carbon\CarbonImmutable;
+use Hyperf\Database\Model\Collection;
+use Hyperf\Database\Model\Relations\HasMany;
 use Hyperf\DbConnection\Model\Model;
 /**
  * @property string $id 
@@ -13,6 +16,9 @@ use Hyperf\DbConnection\Model\Model;
  */
 class Restaurant extends Model
 {
+    protected $keyType = 'string';
+    public $incrementing = false;
+
     /**
      * The table associated with the model.
      *
@@ -32,6 +38,19 @@ class Restaurant extends Model
      */
     protected $casts = ['created_at' => 'datetime', 'updated_at' => 'datetime'];
 
-    protected $keyType = 'string';
-    public $incrementing = false;
+    public function supplies(): HasMany
+    {
+        return $this->hasMany(Supply::class, 'restaurant_id', 'id');
+    }
+
+    /**
+     * @return Collection<Supply>
+     */
+    public function expiringSupplies(): Collection
+    {
+        $today = CarbonImmutable::now();
+        return $this->supplies()->whereBetween('expires_at', [$today->startOfWeek(), $today->endOfWeek()])
+            ->orderBy('expires_at')
+            ->get();
+    }
 }
