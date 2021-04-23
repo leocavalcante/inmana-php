@@ -44,10 +44,10 @@ Make sure to change `.env` for proper values (like setting `DB_HOST` to `db` if 
 
 ### Run migrations
 ```shell
-php bin/hyper.php migrate
+php bin/hyperf.php migrate
 ```
 
 ### Start the server (and watch for changes)
 ```shell
-php bin/hyper.php server:watch
+php bin/hyperf.php server:watch
 ```
