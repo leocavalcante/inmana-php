@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Mail\ExpiringSupplies;
 use App\Model\Restaurant;
+use Hyperf\Utils\Coroutine;
 use HyperfExt\Mail\Mail;
 
 class MailService
@@ -17,13 +18,15 @@ class MailService
 
         /** @var Restaurant $restaurant */
         foreach ($restaurants as $restaurant) {
-            $supplies = $restaurant->expiringSupplies();
+            Coroutine::create(static function() use ($restaurant, &$results): void {
+                $supplies = $restaurant->expiringSupplies();
 
-            if ($supplies->isNotEmpty()) {
-                $results[] = [$restaurant->email, Mail::to($restaurant->email)->send(new ExpiringSupplies($supplies))];
-            } else {
-                $results[] = [$restaurant->email, 'Without expiring'];
-            }
+                if ($supplies->isNotEmpty()) {
+                    $results[] = [$restaurant->email, Mail::to($restaurant->email)->send(new ExpiringSupplies($supplies))];
+                } else {
+                    $results[] = [$restaurant->email, 'Without expiring'];
+                }
+            });
         }
 
         return $results;
