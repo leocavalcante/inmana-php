@@ -10,10 +10,10 @@
 
 ## Comparison table
 
-| | Language | Server | Framework | ORM |
+| | Language | Runtime | Framework | ORM |
 | --- | --- | --- | --- | --- |
-| **From** | Elixir | GenServer | Phoenix | Ecto |
-| **To** | **PHP** | **Swoole** | **Hyperf** | **Hyperf-Eloquent** |
+| **From** | Elixir | Processes (Tasks/GenServer)  | Phoenix | Ecto |
+| **To** | **PHP** | **Swoole Coroutines/Fibers** | **Hyperf** | **Hyperf-Eloquent** |
 
 For the REPL (iex) you can use [gokure/hyperf-tinker](https://packagist.org/packages/gokure/hyperf-tinker).
 
@@ -32,7 +32,7 @@ docker compose run --rm --service-ports app
 This will start an interactive shell inside a container-based development environment.<br>
 **The following commands should be executed inside this shell session.**
 
-> If you don't want to use Docker you can skip this step, just make sure you have a running MySQL server.
+> If you don't want to use Docker you can skip this step, just make sure you have a running MySQL server, PHP 7.4 and Swoole 4.6.
 
 ### Install dependencies
 ```shell
@@ -51,3 +51,9 @@ php bin/hyperf.php migrate
 ```shell
 php bin/hyperf.php server:watch
 ```
+
+### Trigger expiring emails
+```shell
+php bin/hyperf.php mail:expiring
+```
+> After that, see `runtime/logs/hyperf.log`
